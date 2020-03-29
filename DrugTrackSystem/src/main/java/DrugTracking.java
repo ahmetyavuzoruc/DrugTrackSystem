@@ -4,6 +4,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.text.SimpleDateFormat;
+import java.util.LinkedList;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -235,14 +237,25 @@ public class DrugTracking extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         
-         SimpleDateFormat dcn = new SimpleDateFormat("yyyy-MM-dd");
+        
+        List list = new LinkedList();
+        
+        list.add(txtName.getText());
+        list.add(txtTotalNumber.getText());
+        list.add(txtMF.getText());
+        list.add(txtPrice.getText());
+        
+         SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
        
         DefaultTableModel model = (DefaultTableModel)tblDrugTruck.getModel();
 
          // insert row to the model from jtextfields using addRow method
-        model.addRow(new Object[]{txtName.getText(), 
-            txtTotalNumber.getText(),txtMF.getText(), 
-            txtPrice.getText(), dcn.format(jDateChooser1.getDate())});
+        model.addRow(new Object[]{list.get(0), 
+                                  list.get(1),
+                                  list.get(2),
+                                  list.get(3),
+                                  formatDate.format(jDateChooser1.getDate())});
+        
         
         txtName.setText("");
         txtTotalNumber.setText("");
@@ -260,10 +273,12 @@ public class DrugTracking extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void txtFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFilterActionPerformed
+        
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(((DefaultTableModel) tblDrugTruck.getModel())); 
-    sorter.setRowFilter(RowFilter.regexFilter(txtFilter.getText()));
+    
+        sorter.setRowFilter(RowFilter.regexFilter(txtFilter.getText()));
 
-    tblDrugTruck.setRowSorter(sorter);
+        tblDrugTruck.setRowSorter(sorter);
     }//GEN-LAST:event_txtFilterActionPerformed
 
    
